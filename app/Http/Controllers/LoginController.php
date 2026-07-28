@@ -22,7 +22,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
             session(['user_id' => $user->id, 'user_name' => $user->name]);
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/admindashboard');
         }
 
         return redirect()->back()->withErrors([

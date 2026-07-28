@@ -36,6 +36,9 @@ Route::post('action-login', [\App\Http\Controllers\LoginController::class, 'acti
 
 Route::prefix('admin')->group(function(){
     Route::resource('/dashboard', \App\Http\Controllers\Admin\DashboardController::class);
+
+    Route::resource('/contact', App\Http\Controllers\Admin\ContactController::class);
+    Route::resource('/blog', App\Http\Controllers\Admin\BlogController::class);
 });
 
 // logout
@@ -54,4 +57,3 @@ Route::get('student', [\App\Http\Controllers\Admin\StudentController::class, 'in
 route::post('/student/simpan', [App\Http\Controllers\Admin\StudentController::class, 'simpan']);
 route::post('/student/update/{id}', [App\Http\Controllers\Admin\StudentController::class, 'update']);
 route::get('/student/hapus/{id}', [App\Http\Controllers\Admin\StudentController::class, 'hapus']);
-

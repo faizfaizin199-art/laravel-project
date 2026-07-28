@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-class DashboardController extends Controller
+use App\Models\Blog;
+class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $title = "Admin Dashboard";
-        return view('admin/dashboard', compact('title'));
+        $title = 'Data Blog';
+        $blogs = Blog::get();
+        return view('admin.blog.index', compact('blogs', 'title'));
     }
 
     /**
@@ -22,8 +22,8 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
-
+        $title = "Create New Blog";
+        return view('admin.blog.create', compact('title'));
     }
 
     /**
@@ -31,7 +31,20 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $photo = null;
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo')->store('blog', 'public');
+        }
+
+        Blog::create([
+            'title' => $request->title,
+            'sub_content' => $request->sub_content,
+            'content' => $request->content,
+            'photo' => $photo,
+            'is_active' => $request->is_active,
+            'author' => auth()->user()->name,
+        ]);
+        return redirect()->to('admin/blog');
     }
 
     /**
